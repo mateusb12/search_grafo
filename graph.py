@@ -31,10 +31,6 @@ class Graph:
 
         self.nodes.append(new_node)
 
-    def __str__(self):
-        return 'Graph: \n{}'.format(
-            '\n'.join([f'{existing_node.label} - {existing_node.connections}' for existing_node in self.nodes]))
-
     # Método já printa a fila em cada iteração e mostra o valor
     def start(self, node_source: str):
         generated_tree = []
@@ -75,7 +71,6 @@ class Graph:
 
 def setup_question(input_graph: Graph):
     nodes = dict((chr(i + 114), []) for i in range(8))
-    # nodes = dict((str(i+1), []) for i in range(7))
 
     nodes['r'] = ['s', 'v']
     nodes['s'] = ['w', 'r']
@@ -85,14 +80,6 @@ def setup_question(input_graph: Graph):
     nodes['w'] = ['s', 't', 'x']
     nodes['x'] = ['t', 'u', 'w', 'y']
     nodes['y'] = ['u', 'x']
-
-    # nodes['1'] = ['2', '3']
-    # nodes['2'] = ['1', '4', '6']
-    # nodes['3'] = ['1', '4']
-    # nodes['4'] = ['1', '3', '2', '7']
-    # nodes['5'] = ['6', '7']
-    # nodes['6'] = ['2', '5', '7']
-    # nodes['7'] = ['4', '5', '6']
 
     all_nodes = dict((node, Node(node)) for node in nodes)
 
@@ -104,5 +91,5 @@ def setup_question(input_graph: Graph):
 g = Graph()
 setup_question(g)
 
-# Teste dos slides (Aula 05 - p. 18) - OK
+# Método realiza o algorítmo e depois mostra a árvore gerada
 g.start('t')
