@@ -1,6 +1,7 @@
 from tkinter import *
 import tkinter
 import time
+import math
 
 window = Tk()
 width = 1200
@@ -61,14 +62,41 @@ class NodeCell:
         if kwargs["orientation"] == "left":
             pm = (self.x - self.radius, self.y, self.x - connection_length, self.y, 5)
         if kwargs["orientation"] == "up":
-            pm = (self.x, self.y - self.radius, self.x, self.y - connection_length, 5)
+            pm = (self.x, self.y - self.radius, self.x, self.y - self.radius - connection_length, 5)
         if kwargs["orientation"] == "down":
-            pm = (self.x, self.y + self.radius, self.x, self.y + connection_length, 5)
+            pm = (self.x, self.y + self.radius, self.x, self.y + self.radius + connection_length, 5)
+        if kwargs["orientation"] == "northwest":
+            fp = (self.x + math.cos(math.degrees(45)) * self.radius,
+                  self.y - math.sin(math.degrees(45)) * self.radius)
+            sp = (fp[0] + math.cos(math.degrees(45)) * connection_length,
+                  fp[1] - math.sin(math.degrees(45)) * connection_length)
+            pm = (fp[0], fp[1], sp[0], sp[1], 5)
+        if kwargs["orientation"] == "northeast":
+            fp = (self.x - math.cos(math.degrees(45)) * self.radius,
+                  self.y - math.sin(math.degrees(45)) * self.radius)
+            sp = (fp[0] - math.cos(math.degrees(45)) * connection_length,
+                  fp[1] - math.sin(math.degrees(45)) * connection_length)
+            pm = (fp[0], fp[1], sp[0], sp[1], 5)
+        if kwargs["orientation"] == "southeast":
+            fp = (self.x + math.sin(math.degrees(45)) * self.radius,
+                  self.y - math.cos(math.degrees(45)) * self.radius)
+            sp = (fp[0] + math.sin(math.degrees(45)) * connection_length,
+                  fp[1] - math.cos(math.degrees(45)) * connection_length)
+            pm = (fp[0], fp[1], sp[0], sp[1], 5)
+        if kwargs["orientation"] == "southwest":
+            fp = (self.x - math.sin(math.degrees(45)) * self.radius,
+                  self.y - math.cos(math.degrees(45)) * self.radius)
+            sp = (fp[0] - math.sin(math.degrees(45)) * connection_length,
+                  fp[1] - math.cos(math.degrees(45)) * connection_length)
+            pm = (fp[0], fp[1], sp[0], sp[1], 5)
 
         self.lines.append(canvas.create_line(pm[0], pm[1], pm[2], pm[3], width=pm[4]))
 
 
-node1 = NodeCell(canvas, x=400, y=250, diameter=80, thickness=3, color="white", text="A", link=("right", 200))
+node1 = NodeCell(canvas, x=400, y=250, diameter=80, thickness=3, color="white", text="A", link=("northeast", 50))
+node1.draw_connection(50, orientation="northwest")
+node1.draw_connection(50, orientation="southwest")
+node1.draw_connection(100, orientation="left")
 
 # while True:
 #     window.update()
