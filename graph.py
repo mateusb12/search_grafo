@@ -18,13 +18,9 @@ class Graph:
 
         self.nodes.append(new_node)
 
-    def __str__(self):
-        return 'Graph: \n{}'.format(
-            '\n'.join([f'{existing_node.label} - {existing_node.connections}' for existing_node in self.nodes]))
-
     # Método já printa a fila em cada iteração e mostra o valor
     def start(self, node_source: str):
-        generated_tree = []
+        max_distance = 0
         source = None
         for node in self.nodes:
             if node.label == node_source:
@@ -38,9 +34,6 @@ class Graph:
             visited = set()
 
             while len(queue):
-                print(' - '.join([f'{str(i)}({i.value})' for i in queue]), 'queue')
-                print(' - '.join([f'{str(i)}({i.value})' for i in visited]), 'visited\n')
-
                 actual_node = queue[0]
                 queue = queue[1:]
 
@@ -54,6 +47,24 @@ class Graph:
 
                     if child not in queue and child not in visited:
                         queue.append(child)
+                        max_distance = max(actual_node.value, child.value)
+
+            return max_distance
+
+        return -1
+
+    def reset_values(self):
+        for i in self.nodes:
+            i.value = float("inf")
+
+    def find_diameter(self):
+        diameter = 0
+
+        for i in self.nodes:
+            diameter = max(diameter, self.start(i.label))
+            self.reset_values()
+
+        print(f'Diâmetro: {diameter}')
 
 
 def setup_question(input_graph: Graph):
@@ -78,4 +89,4 @@ def setup_question(input_graph: Graph):
 g = Graph()
 setup_question(g)
 
-g.start('v')
+g.find_diameter()
