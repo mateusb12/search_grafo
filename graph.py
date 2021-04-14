@@ -4,9 +4,6 @@ class Node:
         self.value = float("inf")
         self.connections = []
 
-    def __str__(self):
-        return f"[{self.label}]"
-
 
 class Graph:
     def __init__(self):
@@ -89,4 +86,5 @@ def setup_question(input_graph: Graph):
 g = Graph()
 setup_question(g)
 
+# Mostra o diâmetro do grafo
 g.find_diameter()
