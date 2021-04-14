@@ -18,10 +18,6 @@ class Graph:
 
         self.nodes.append(new_node)
 
-    def __str__(self):
-        return 'Graph: \n{}'.format(
-            '\n'.join([f'{existing_node.label} - {existing_node.connections}' for existing_node in self.nodes]))
-
     # Método já printa a fila em cada iteração e mostra o valor
     def start(self, node_source: str):
         generated_tree = []
@@ -82,4 +78,5 @@ def setup_question(input_graph: Graph):
 g = Graph()
 setup_question(g)
 
+# Realiza o algorítmo e mostra a distância média
 g.start('v')
